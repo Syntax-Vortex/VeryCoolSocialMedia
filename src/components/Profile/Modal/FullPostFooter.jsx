@@ -21,8 +21,16 @@ function PostFooter(){
     return(
         <div className="flex flex-col items-start justify-start gap-4 pb-3 flex-1 h-full">
             
-            <div className="flex flex-col h-full">
-                <PostComment />
+            <div className="flex flex-col h-full gap-2  max-h-[85%]">
+                <p className="font-semibold text-xl">Comments</p>
+                
+                <div className="flex flex-col gap-6 overflow-auto scrollbar-hide">
+                    <PostComment 
+                        pfp='/img1.png' 
+                        username='beastgamergs' 
+                        text='This is a sample comment just to check the styling and other shit lolThis is a sample comment just to check the styling'
+                        createdAt='12 hours ago'/>
+                </div>
             </div>
 
             <div className="flex justify-center items-center gap-5 lg:gap-7">
@@ -33,9 +41,7 @@ function PostFooter(){
                     <p className="text-[12px] lg:text[16px]">{likes} Likes</p>
                 </div>
                 <div className="flex gap-1 justify-start items-center">
-                    <button>
-                        <svg className="size-5 lg:size-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-                    </button>
+                    <svg className="size-5 lg:size-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
                     <p className="text-[12px] lg:text[16px]">{comments} Comments</p>
                 </div>
             </div>

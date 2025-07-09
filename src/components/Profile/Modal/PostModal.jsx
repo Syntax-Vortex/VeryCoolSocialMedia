@@ -12,10 +12,10 @@ function PostModal(props) {
         (
             <div className="w-full h-full fixed inset-0 flex items-start justify-center">
                 <button className='w-full h-full bg-black/50 absolute inset-0' onClick={handleCloseModal}></button>
-                <div className="z-10 flex flex-col sm:flex-row justify-start items-center w-[60%] gap-3 mt-10 gradient-sage px-3 sm:px-7 py-4 rounded-3xl
+                <div className="z-10 flex flex-col sm:flex-row justify-start items-center w-[90%] sm:w-[80%] gap-3 mt-10 gradient-sage px-3 sm:px-7 py-4 rounded-3xl
                         border border-white/5 duration-150 text-white h-[90vh] overflow-y-scroll sm:overflow-y-auto">
 
-                    <div className='w-full sm:w-[60%] flex flex-col items-start h-full'>
+                    <div className='w-full sm:w-[50%] flex flex-col items-start h-full'>
                         <PostHeader username={username} pfp={pfp} />
 
                         <div className='flex flex-col gap-3 overflow-y-scroll max-h-[70vh] scrollbar-hide'>

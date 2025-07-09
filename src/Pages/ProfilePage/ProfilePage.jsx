@@ -18,7 +18,7 @@ function ProfilePage(){
     }
 
     return(
-        <div className="flex flex-col w-full pl-4 sm:pl-10 lg:px-30 py-8">
+        <div className="flex flex-col w-full h-[100vh] pl-4 sm:pl-10 lg:px-30 py-8">
             <ProfileHeader />
             <ProfileTabs />
             <ProfilePosts handleOpenModal={handleOpenModal}/>

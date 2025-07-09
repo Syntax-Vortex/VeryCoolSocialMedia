@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FeedPost from "./FeedPost";
-import Loader from "../misc/Loader";
+import Loader from "../misc/LoaderSkeleton";
 
 function Feed(){
 
