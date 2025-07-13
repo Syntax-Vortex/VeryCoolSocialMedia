@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useLogin from "../../Hooks/useLogin";
+import useErrorPopup from "../../Hooks/useErrorPopup.jsx";
 
 function Login(){
 
@@ -8,6 +10,7 @@ function Login(){
         })
 
     const [ showPassword, setShowPassword ] = useState(false);
+    const { loading, error, login, ErrorPopup } = useLogin();
 
     return(
         <>
@@ -48,9 +51,11 @@ function Login(){
                     </button>
                 </div>
             </div>
+            
+            <ErrorPopup />
 
-            <button className=" h-9 w-[80vw] sm:w-full max-w-[350px] bg-violet-700 rounded-full cursor-pointer">
-                Log In
+            <button className=" h-9 w-[80vw] sm:w-full max-w-[350px] bg-violet-700 rounded-full cursor-pointer flex justify-center items-center" onClick={() => {login(inputs)}}>
+                {loading? (<div className="button-loader text-[7px] font-semibold"></div>) : 'Log In'}
             </button>
         </>
     )

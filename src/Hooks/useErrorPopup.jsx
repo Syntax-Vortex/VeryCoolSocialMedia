@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useErrorPopup(){
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
 
-    const showErrorPopup = (message) => {
+    const showErrorPopup = useCallback((message) => {
         setErrorMessage(message);
         setShowError(true);
-        
+        console.log(errorMessage, 'error', showError)
         // Auto-hide after 5 seconds
         setTimeout(() => {
             setShowError(false);
             setErrorMessage('');
         }, 5000);
-    };
+    },[])
 
     const hideErrorPopup = () => {
         setShowError(false);

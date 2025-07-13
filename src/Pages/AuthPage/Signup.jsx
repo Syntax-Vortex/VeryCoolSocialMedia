@@ -100,7 +100,7 @@ function Signup() {
             <ErrorPopup />
 
             <button className=" h-9 w-[80vw] sm:w-full max-w-[350px] bg-violet-700 rounded-full cursor-pointer flex justify-center items-center" onClick={() => {signUp(inputs)}}>
-                {loading? (<div className="loader text-[7px] font-semibold"></div>) : 'Sign Up'}
+                {loading? (<div className="button-loader text-[7px] font-semibold"></div>) : 'Sign Up'}
                 
             </button>
         </>

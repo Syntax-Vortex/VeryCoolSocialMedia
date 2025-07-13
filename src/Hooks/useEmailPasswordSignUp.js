@@ -1,6 +1,6 @@
 import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { auth, firestore } from "../firebase/firebase";
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import useErrorPopup from './useErrorPopup';
 import useAuthStore from '../store/authStore';
 
@@ -16,6 +16,16 @@ function useEmailPasswordSignUp(){
     const loginUser = useAuthStore(state => state.login);
 
     const signUp = async (inputs) => {
+        const usersRef = collection(firestore, 'users');
+
+        const q = query(usersRef, where('username', '==' , inputs.username));
+        const querrySnapshot = await getDocs(q);
+
+        if(!querrySnapshot.empty) {
+            showErrorPopup("Error: username already exists");
+            return;
+        }
+
         if(!inputs.email || !inputs.password || !inputs.username || !inputs.fullname) {
             showErrorPopup("Please fill out all the fields");
             return;
