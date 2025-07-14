@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactDOM from 'react-dom'
 
 export default function useSuccessPopup(){
     const [SuccessMessage, setSuccessMessage] = useState('');
@@ -23,8 +24,8 @@ export default function useSuccessPopup(){
     const SuccessPopup = () => {
         if (!showSuccess) return null;
         
-        return (
-            <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50">
+        return(
+            <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50">
                 <div className="flex items-center justify-between">
                     <p>{SuccessMessage}</p>
                     <button 

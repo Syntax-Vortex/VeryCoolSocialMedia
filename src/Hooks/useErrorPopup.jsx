@@ -24,7 +24,7 @@ export default function useErrorPopup(){
         if (!showError) return null;
         
         return (
-            <div className="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50">
+            <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50">
                 <div className="flex items-center justify-between">
                     <p>{errorMessage}</p>
                     <button 

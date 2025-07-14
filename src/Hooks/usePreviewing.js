@@ -2,8 +2,9 @@ import { useState } from "react";
 import useErrorPopup from './useErrorPopup'
 
 export default function usePreviewing(){
-    const [selectedFile, setSelectedFile] = useState();
-    const { showErrorPopup, HideErrorPopup, ErrorPopup } = useErrorPopup();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFileString, setSelectedFileString] = useState('');
+    const { showErrorPopup, hideErrorPopup, ErrorPopup } = useErrorPopup();
     const maxFileSizeInBytes = 5 * 1024 * 1024;
 
     const handleImageChange = (e) => {
@@ -12,22 +13,25 @@ export default function usePreviewing(){
             if(file.size >= maxFileSizeInBytes) {
                 showErrorPopup('Error: max file size is 5mb');
                 setSelectedFile(null);
+                setSelectedFileString('');
                 return;
             }
 
+            setSelectedFile(file);
+            console.log('File selected:', file); // For debugging
+
             const reader = new FileReader();
-
-            reader.readAsDataURL(file);
-
             reader.onloadend = () => {
-                setSelectedFile(reader.result);
+                setSelectedFileString(reader.result);
             }
+            reader.readAsDataURL(file);
             
-        }else{
-            showErrorPopup('Error selecting an image');
+        } else {
+            showErrorPopup('Error: Please select a valid image file');
             setSelectedFile(null);
+            setSelectedFileString('');
         }
     }
 
-    return { selectedFile, handleImageChange, setSelectedFile, ErrorPopup };
+    return { selectedFile, selectedFileString, handleImageChange, setSelectedFile, ErrorPopup };
 }

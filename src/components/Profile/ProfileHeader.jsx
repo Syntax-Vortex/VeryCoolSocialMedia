@@ -1,9 +1,10 @@
 import useUserProfileStore from "../../store/userProfileStore"
 import useAuthStore from '../../store/authStore.js'
+import usePfpUpdatedAt from "../../store/usePfpUpdatedAt.js";
 
 function ProfileHeader( props ){
     const { isOpen, handleCloseModal, handleOpenModal } = props;
-
+    const { pfpUpdatedAt } = usePfpUpdatedAt();
     const { userProfile } = useUserProfileStore();
     const authUser = useAuthStore((state) => state.user);
     const visitingOwnProfile = authUser && authUser.username === userProfile.username;
@@ -11,7 +12,7 @@ function ProfileHeader( props ){
 
     return(
         <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center sm:items-center gap-4 sm:gap-10">
-            <img className="size-12 sm:size-20 md:size-30 aspect-square rounded-full" src={userProfile.pfp} />
+            <img className="size-12 sm:size-20 md:size-30 aspect-square rounded-full" src={`${userProfile.pfp}?t=${pfpUpdatedAt}`} />
 
             <div className="flex flex-col justify-center items-start">
                 

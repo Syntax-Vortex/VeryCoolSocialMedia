@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useLogout from "../../Hooks/useLogout";
 import useAuthStore from "../../store/authStore";
+import usePfpUpdatedAt from "../../store/usePfpUpdatedAt";
 
 function Sidebar() {
 
@@ -23,7 +24,7 @@ function Sidebar() {
 
     const {handleLogout, loading, error, ErrorPopup } = useLogout();
     const authUser = useAuthStore((state) => state.user);
-
+    const { pfpUpdatedAt } = usePfpUpdatedAt();
     if(!authUser) return null;
 
     return (
@@ -31,7 +32,7 @@ function Sidebar() {
             <div className="flex flex-col items-center w-full h-full gap-10">
 
                 <Link className="flex flex-col items-center min-w-[130px] py-2 hover:bg-gray-700 rounded-4xl duration-150" to={`/${authUser.username}`}>
-                    <img className="h-9 md:h-20 w-9 md:w-20 mb-2 rounded-full object-cover" src={authUser.pfp || '/profilepic.png'} alt="Profile"/>
+                    <img className="h-9 md:h-20 w-9 md:w-20 mb-2 rounded-full object-cover" src={`${authUser.pfp}?t=${pfpUpdatedAt}`} alt="Profile"/>
                     <p className="font-semibold hidden md:block">{authUser.fullname}</p>
                     <p className="font-thin hidden md:block">@{authUser.username}</p>
                 </Link>
