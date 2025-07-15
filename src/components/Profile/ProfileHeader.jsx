@@ -1,17 +1,21 @@
 import useUserProfileStore from "../../store/userProfileStore"
 import useAuthStore from '../../store/authStore.js'
 import usePfpUpdatedAt from "../../store/usePfpUpdatedAt.js";
+import useFollow from "../../Hooks/useFollow.js";
+import MinimalLoader from '../misc/MinimalLoader.jsx'
 
 function ProfileHeader( props ){
     const { isOpen, handleCloseModal, handleOpenModal } = props;
     const { pfpUpdatedAt } = usePfpUpdatedAt();
     const { userProfile } = useUserProfileStore();
+    const {isUpdating, isFollowing, handleFollow, ErrorPopup} = useFollow(userProfile.uid);
     const authUser = useAuthStore((state) => state.user);
     const visitingOwnProfile = authUser && authUser.username === userProfile.username;
     const visitingAnotherProfile = authUser && authUser.username != userProfile.username;
 
     return(
         <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center sm:items-center gap-4 sm:gap-10">
+            <ErrorPopup />
             <img className="size-12 sm:size-20 md:size-30 aspect-square rounded-full" src={`${userProfile.pfp}?t=${pfpUpdatedAt}`} />
 
             <div className="flex flex-col justify-center items-start">
@@ -20,14 +24,14 @@ function ProfileHeader( props ){
                     {userProfile.fullname}
                     {visitingOwnProfile && 
                         <button className="text-[14px] text-black bg-gray-300 p-2 sm:p-2 sm:px-3 rounded-full ml-auto mr-4 sm:mx-0 hover:bg-gray-500 
-                                duration-150" onClick={handleOpenModal}>
+                                duration-150" onClick={handleOpenModal} disabled={isUpdating}>
                             Edit Profile
                         </button>
                     }
                     {visitingAnotherProfile && 
                         <button className="text-[16px] bg-blue-500 p-2 sm:p-2 sm:px-4 rounded-full ml-auto mr-4 sm:mx-0 hover:bg-blue-700 
-                                duration-150">
-                            Follow
+                                duration-150" onClick={handleFollow}>
+                            {isUpdating? (<MinimalLoader />) : isFollowing? 'Unfollow' : 'Follow'}
                         </button>
                     }
                     
