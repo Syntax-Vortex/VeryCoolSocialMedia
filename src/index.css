@@ -1,139 +1,158 @@
 @import "tailwindcss";
 
 @layer utilities {
-  .gradient-lavender {
-    background: linear-gradient(to bottom, #3F3351, #504066);
-  }
+    .gradient-lavender {
+        background: linear-gradient(to bottom, #3F3351, #504066);
+    }
 
-  .gradient-indigo {
-    background: linear-gradient(to bottom, #2D3A64, #3A4A7B);
-  }
+    .gradient-indigo {
+        background: linear-gradient(to bottom, #2D3A64, #3A4A7B);
+    }
 
-  .gradient-rose {
-    background: linear-gradient(to bottom, #4B3C4E, #614A65);
-  }
+    .gradient-rose {
+        background: linear-gradient(to bottom, #4B3C4E, #614A65);
+    }
 
-  .gradient-coral {
-    background: linear-gradient(to bottom, #553841, #6A4450);
-  }
+    .gradient-coral {
+        background: linear-gradient(to bottom, #553841, #6A4450);
+    }
 
-  .gradient-teal {
-    background: linear-gradient(to bottom, #254D4D, #346363);
-  }
+    .gradient-teal {
+        background: linear-gradient(to bottom, #254D4D, #346363);
+    }
 
-  .gradient-mauve {
-    background: linear-gradient(to bottom, #5E4B56, #755867);
-  }
+    .gradient-midnight {
+        background: linear-gradient(to bottom, #1B2735, #2C3E50);
+    }
 
-  .gradient-plum {
-    background: linear-gradient(to bottom, #4C3A4C, #634C63);
-  }
+    .gradient-ember {
+        background: linear-gradient(to bottom, #4B1F1F, #652828);
+    }
 
-  .gradient-sage {
-    background: linear-gradient(to bottom, #3A4C46, #4F635B);
-  }
+    .gradient-carbon {
+        background: linear-gradient(to bottom, #1A1A1A, #2B2B2B);
+    }
+
+    .gradient-amethyst {
+        background: linear-gradient(to bottom, #3D2F4F, #513A6B);
+    }
+
+    .gradient-bronze {
+        background: linear-gradient(to bottom, #4D3A24, #6A4B30);
+    }
+
+    .gradient-slate {
+        background: linear-gradient(to bottom, #2F3640, #454E5A);
+    }
+
+    .gradient-crimsonsoft {
+        background: linear-gradient(to bottom, #5A1F1F, #1E1212);
+    }
 
 }
 
 .scrollbar-hide {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+    display: none;
+    /* Chrome, Safari */
 }
 
-/* From Uiverse.io by catraco */ 
+/* From Uiverse.io by catraco */
 .heart-container {
-  --heart-color: rgb(255, 91, 137);
-  position: relative;
-  transition: .3s;
+    --heart-color: rgb(255, 91, 137);
+    position: relative;
+    transition: .3s;
 }
 
 .heart-container .checkbox {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 20;
-  cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 20;
+    cursor: pointer;
 }
 
 .heart-container .svg-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .heart-container .svg-outline,
-        .heart-container .svg-filled {
-  fill: var(--heart-color);
-  position: absolute;
+.heart-container .svg-filled {
+    fill: var(--heart-color);
+    position: absolute;
 }
 
 .heart-container .svg-filled {
-  animation: keyframes-svg-filled 1s;
-  display: none;
+    animation: keyframes-svg-filled 1s;
+    display: none;
 }
 
 .heart-container .svg-celebrate {
-  position: absolute;
-  animation: keyframes-svg-celebrate .5s;
-  animation-fill-mode: forwards;
-  display: none;
-  stroke: var(--heart-color);
-  fill: var(--heart-color);
-  stroke-width: 2px;
+    position: absolute;
+    animation: keyframes-svg-celebrate .5s;
+    animation-fill-mode: forwards;
+    display: none;
+    stroke: var(--heart-color);
+    fill: var(--heart-color);
+    stroke-width: 2px;
 }
 
 .heart-container .checkbox:checked~.svg-container .svg-filled {
-  display: block
+    display: block
 }
 
 .heart-container .checkbox:checked~.svg-container .svg-celebrate {
-  display: block
+    display: block
 }
 
 @keyframes keyframes-svg-filled {
-  0% {
-    transform: scale(0);
-  }
+    0% {
+        transform: scale(0);
+    }
 
-  25% {
-    transform: scale(1.2);
-  }
+    25% {
+        transform: scale(1.2);
+    }
 
-  50% {
-    transform: scale(1);
-    filter: brightness(1.5);
-  }
+    50% {
+        transform: scale(1);
+        filter: brightness(1.5);
+    }
 }
 
 @keyframes keyframes-svg-celebrate {
-  0% {
-    transform: scale(0);
-  }
+    0% {
+        transform: scale(0);
+    }
 
-  50% {
-    opacity: 1;
-    filter: brightness(1.5);
-  }
+    50% {
+        opacity: 1;
+        filter: brightness(1.5);
+    }
 
-  100% {
-    transform: scale(1.4);
-    opacity: 0;
-    display: none;
-  }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+        display: none;
+    }
 }
 
 .checkbox {
-  position: absolute;
-  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
-  opacity: 0;
-  z-index: 10;
-  cursor: pointer;
+    position: absolute;
+    inset: 0;
+    /* top: 0; right: 0; bottom: 0; left: 0 */
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
 }
-

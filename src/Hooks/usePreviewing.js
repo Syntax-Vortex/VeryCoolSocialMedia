@@ -8,7 +8,7 @@ export default function usePreviewing(){
     const maxFileSizeInBytes = 5 * 1024 * 1024;
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
+        const file =  e.target.files[0];
         if(file && file.type.startsWith('image/')){
             if(file.size >= maxFileSizeInBytes) {
                 showErrorPopup('Error: max file size is 5mb');
@@ -33,5 +33,10 @@ export default function usePreviewing(){
         }
     }
 
-    return { selectedFile, selectedFileString, handleImageChange, setSelectedFile, ErrorPopup };
+    const handleImageRemove = () => {
+        setSelectedFile(null);
+        setSelectedFileString('removed');
+    }
+
+    return { selectedFile, selectedFileString, handleImageChange,handleImageRemove, setSelectedFile, ErrorPopup };
 }

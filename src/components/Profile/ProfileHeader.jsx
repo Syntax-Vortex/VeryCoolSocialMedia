@@ -16,7 +16,7 @@ function ProfileHeader( props ){
     return(
         <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center sm:items-center gap-4 sm:gap-10">
             <ErrorPopup />
-            <img className="size-12 sm:size-20 md:size-30 aspect-square rounded-full" src={`${userProfile.pfp}?t=${pfpUpdatedAt}`} />
+            <img className="size-12 sm:size-20 md:size-30 aspect-square rounded-full" src={userProfile.pfp? `${userProfile.pfp}?t=${pfpUpdatedAt}` : '/defpfp.png'} />
 
             <div className="flex flex-col justify-center items-start">
                 
@@ -41,9 +41,9 @@ function ProfileHeader( props ){
 
                 <div className="flex justify-start items-center gap-4">
 
-                    <p className="font-thin"><span className="font-bold">{userProfile.posts.length}</span> Posts</p>
-                    <p className="font-thin"><span className="font-bold">{userProfile.following.length}</span> Following</p>
-                    <p className="font-thin"><span className="font-bold">{userProfile.followers.length}</span> Followers</p>
+                    <p className="font-thin"><span className="font-bold">{userProfile?.posts?.length || 0}</span> Posts</p>
+                    <p className="font-thin"><span className="font-bold">{userProfile?.following?.length || 0}</span> Following</p>
+                    <p className="font-thin"><span className="font-bold">{userProfile?.followers?.length || 0}</span> Followers</p>
                     
                 </div>
 

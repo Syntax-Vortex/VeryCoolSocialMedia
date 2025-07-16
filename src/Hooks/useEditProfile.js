@@ -16,7 +16,7 @@ export default function useEditProfile() {
     const { showErrorPopup, hideErrorPopup, ErrorPopup } = useErrorPopup();
     const { showSuccessPopup, hideSuccessPopup, SuccessPopup } = useSuccessPopup();
 
-    const editProfile = async (inputs, selectedFile) => {
+    const editProfile = async (inputs, selectedFile, selectedFileString) => {
         if (isUpdating || !authUser) {
             return;
         }
@@ -27,12 +27,13 @@ export default function useEditProfile() {
         try {
             setUpdatedSuccessfully(false);
             if (selectedFile) {
-
                 const filePath = `profilePics/${authUser.uid}`;
                 await supabase.storage.from('images').upload(filePath, selectedFile, {
                     upsert: true
                 });
                 pfpUrl = supabase.storage.from('images').getPublicUrl(filePath).data.publicUrl;
+            }else if(selectedFileString === 'removed'){
+                pfpUrl = '';
             }
 
             // Only check username availability if it's different from current username

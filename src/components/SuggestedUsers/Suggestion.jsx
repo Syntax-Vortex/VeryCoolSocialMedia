@@ -13,7 +13,7 @@ function Suggestion(props) {
         <div className="flex justify-start items-center gap-2 w-full p-2 rounded-2xl duration-150 hover:scale-[1.01] cursor-pointer hover:bg-[#27272a] group">
             <ErrorPopup />
             <Link to={`/${user.username}`} className="flex items-center gap-2 flex-1">
-                <img className="size-10 rounded-full shadow-2xl" src={user.pfp} />
+                <img className="size-10 rounded-full shadow-2xl" src={user.pfp || '/defpfp.png'} />
                 <div className="flex flex-col items-start justify-center">
                     <p className="font-semibold text-[10px] lg:text-[14px] text-white group-hover:underline">
                         {user.fullname}
