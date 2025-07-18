@@ -63,6 +63,30 @@
     /* Chrome, Safari */
 }
 
+.gradient-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.gradient-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gradient-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2); /* light semi-transparent */
+  border-radius: 8px;
+}
+
+.gradient-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Optional for Firefox */
+.gradient-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
 /* From Uiverse.io by catraco */
 .heart-container {
     --heart-color: rgb(255, 91, 137);

@@ -67,6 +67,6 @@ export default function useCreatePost() {
         }
     }
 
-    return {isLoading, uploadPost, ErrorPopup, showErrorPopup}
+    return {isLoading, uploadPost, ErrorPopup}
 
 }

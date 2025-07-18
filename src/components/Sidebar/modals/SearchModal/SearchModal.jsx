@@ -5,6 +5,7 @@ import Suggestion from '../../../SuggestedUsers/Suggestion';
 import MinimalLoader from '../../../misc/MinimalLoader';
 import useFollow from '../../../../Hooks/useFollow';
 import useAuthStore from '../../../../store/authStore';
+import NoResults from './NoResults';
 
 export default function SearchModal(props) {
     const { isOpen, handleCloseModal } = props
@@ -36,13 +37,13 @@ export default function SearchModal(props) {
                 </div>
 
                 <div className='flex flex-col gap-2 flex-1 mx-6 my-4 overflow-x-clip overflow-y-auto sleek-scrollbar'>
-                    {users?.map((user, index) => {
+                    {users? users.map((user, index) => {
                         return(
                             <div key={index}>
                                 <Suggestion user={user} />
                             </div>
                         );
-                    })}
+                    }) : (<NoResults />)}
                 </div>
             </div>
         </div>

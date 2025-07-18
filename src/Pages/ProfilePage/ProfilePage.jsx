@@ -13,19 +13,10 @@ import EditProfileModal from "../../components/Profile/Modal/EditProfileModal/Ed
 
 function ProfilePage(){
 
-    const [postOpen, setPostOpen ] = useState(false);
     const [editProfileModalOpen, setEditProfileModalOpen] = useState(false);
     const [user,loading,error] = useAuthState(auth);
     const { username } = useParams();
     const {isLoading, hasFetched, userProfile, ErrorPopup } = useGetUserProfileByUsername(username);
-
-    function handleClosePost() {
-        setPostOpen(false);
-    }
-
-    function handleOpenPost() {
-        setPostOpen(true);
-    }
 
     function handleCloseEditProfile(){
         setEditProfileModalOpen(false);
@@ -43,8 +34,7 @@ function ProfilePage(){
             <ErrorPopup />
             <ProfileHeader handleOpenModal={handleOpenEditProfile}/>
             <ProfileTabs />
-            <ProfilePosts handleOpenModal={handleOpenPost}/>
-            <PostModal isOpen={postOpen} handleCloseModal={handleClosePost} image='/img1.png' username='beastgamergs' pfp='/img1.png' />
+            <ProfilePosts />
             <EditProfileModal isOpen={editProfileModalOpen} handleCloseModal={handleCloseEditProfile} handleOpenModal={handleOpenEditProfile}/>
         </div> 
     )
