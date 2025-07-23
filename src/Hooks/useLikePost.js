@@ -8,10 +8,11 @@ import usePostStore from "../store/postStore";
 export default function useLikePost(post){
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuthStore((state) => state.user);
-    const [likes, setLikes] = useState(post.likes.length);
-    const [isLiked, setIsLiked] = useState(post.likes.includes(authUser?.uid));
     const {showErrorPopup, hideErrorPopup, ErrorPopup} = useErrorPopup();
-    const {toggleLike} = usePostStore();
+    const {toggleLike, posts} = usePostStore();
+    
+    const currentPost = posts.find(p => p.id === post.id) || post;
+    const isLiked = currentPost.likes.includes(authUser?.uid);
 
     const handleLike = async() => {
         if(isLoading) return;
@@ -27,10 +28,9 @@ export default function useLikePost(post){
             await updateDoc(postRef, {
                 likes: isLiked? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
             });
-            setIsLiked(!isLiked);
-            isLiked? setLikes(likes - 1) : setLikes(likes + 1);
 
         } catch (error) {
+            toggleLike(post.id, authUser);
             showErrorPopup(error.message)
         }finally{
             setIsLoading(false);

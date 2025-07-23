@@ -6,13 +6,16 @@ import { firestore } from "../firebase/firebase";
 import useUserProfileStore from "../store/userProfileStore";
 import usePostStore from "../store/postStore";
 import { supabase } from "../../supabaseClient";
+import { useLocation } from "react-router-dom";
 
 export default function useCreatePost() {
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuthStore((state) => state.user);
     const { showErrorPopup, hideRrrorPopup, ErrorPopup } = useErrorPopup();
-    const { addPost } = useUserProfileStore();
+    const { addPost, userProfile } = useUserProfileStore();
     const { createPost } = usePostStore();
+    const location = useLocation();
+    const pathname = location.pathname;
 
     const uploadPost = async (caption, selectedFiles, theme) => {
         if (!caption && !selectedFiles) {
@@ -55,8 +58,8 @@ export default function useCreatePost() {
             await updateDoc(userDocRef,{posts: [postDocRef.id, ...(userDocData.posts || [])]})
 
             newPostDoc.images = picUrls;
-            addPost({...newPostDoc, id:postDocRef.id});
-            createPost({...newPostDoc, id:postDocRef.id});
+            if(pathname !== '/' && userProfile.uid === authUser.uid) addPost({...newPostDoc, id:postDocRef.id});
+            if(userProfile.uid === authUser.uid) createPost({...newPostDoc, id:postDocRef.id});
             
             return true;
         } catch (error) {

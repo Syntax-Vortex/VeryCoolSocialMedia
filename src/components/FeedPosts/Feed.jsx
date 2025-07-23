@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
 import FeedPost from "./FeedPost";
 import Loader from "../misc/LoaderSkeleton";
+import useGetFeedPosts from '../../Hooks/useGetFeedPosts'
+import NoPosts from "./NoPosts";
 
 function Feed(){
 
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000);
-    }, [])
+    const {isLoading, posts} = useGetFeedPosts();
 
     return(
         <div className="flex flex-col items-center h-full overflow-y-scroll scrollbar-hide pt-10">
@@ -19,16 +15,14 @@ function Feed(){
                     <Loader />
                     <Loader />
                 </>
-            ) : (
-                <>
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                    <FeedPost username='beastgamergs' image='/img1.png' pfp='/img1.png' />
-                </>
-            )}
+            ) : ( posts && posts.length > 0 ? (
+                posts.map(post => {
+                    return(
+                        <FeedPost post={post} key={post.id}/>
+                    )
+                })
+            ) : (<NoPosts />))}
+
         </div>
     )
 }
