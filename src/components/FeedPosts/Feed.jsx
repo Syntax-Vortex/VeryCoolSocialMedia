@@ -7,9 +7,14 @@ import NoPosts from "./NoPosts";
 function Feed(){
 
     const {isLoading, posts} = useGetFeedPosts();
+    
+    // Debug logging
+    console.log('Feed - isLoading:', isLoading);
+    console.log('Feed - posts:', posts);
+    console.log('Feed - posts length:', posts?.length);
 
     return(
-        <div className="flex flex-col items-center h-full overflow-y-scroll scrollbar-hide pt-10">
+        <div className="flex flex-col items-center h-full w-full overflow-y-scroll scrollbar-hide pt-10">
             {isLoading? (
                 <>
                     <Loader />
@@ -22,7 +27,6 @@ function Feed(){
                     )
                 })
             ) : (<NoPosts />))}
-
         </div>
     )
 }

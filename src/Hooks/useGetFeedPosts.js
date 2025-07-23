@@ -16,7 +16,12 @@ export default function useGetFeedPosts(){
     useEffect(() => {
         const getFeedPosts = async() => {
             setIsLoading(true);
-            if(authUser.following.length === 0){
+            
+            // Add debugging logs
+            console.log('Auth User:', authUser);
+            console.log('Following array:', authUser?.following);
+            
+            if(!authUser?.following || authUser.following.length === 0){
                 setIsLoading(false);
                 setPosts([]);
                 return;

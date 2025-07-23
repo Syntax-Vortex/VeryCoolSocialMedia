@@ -24,16 +24,16 @@ function GoogleAuth() {
                 
                 const userDoc = userSnap.data();
                 localStorage.setItem('user-info', JSON.stringify(userDoc));
-                await loginUser(userDoc);
+                loginUser(userDoc);
 
             }else if(newUser) {
                 const userDoc = {
                     uid: newUser.user.uid,
                     email: newUser.user.email,
                     username: newUser.user.email.split('@')[0],
-                    fullname: newUser.user.displayName,
+                    fullname: newUser.user.displayName || 'User',
                     bio: '',
-                    pfp: newUser.user.photoURL,
+                    pfp: newUser.user.photoURL || '/defpfp.png',
                     followers: [],
                     following: [],
                     posts: [],
@@ -42,7 +42,7 @@ function GoogleAuth() {
 
                 await setDoc(doc(firestore, 'users', newUser.user.uid), userDoc);
                 localStorage.setItem('user-info', JSON.stringify(userDoc));
-                await loginUser(userDoc);
+                loginUser(userDoc);
             }
 
         } catch (error) {
@@ -54,8 +54,15 @@ function GoogleAuth() {
     return (
         <>
             <div className="flex items-center justify-center sm:w-full w-[80vw] max-w-[350px]">
-                <button className="border border-solid border-gray-700 px-10 py-3 rounded-2xl cursor-pointer hover:bg-gray-800 duration-150" onClick={handleGoogleAuth}>
-                    <img className="w-5 h-auto" src="/google.png" />
+                <button 
+                    className="border border-solid border-gray-700 px-10 py-3 rounded-2xl cursor-pointer hover:bg-gray-800 duration-150 disabled:opacity-50 disabled:cursor-not-allowed" 
+                    onClick={handleGoogleAuth}
+                    disabled={loading}>
+                    {loading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                        <img className="w-5 h-auto" src="/google.png" alt="Google" />
+                    )}
                 </button>
             </div>
             <ErrorPopup />
