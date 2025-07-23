@@ -1,10 +1,12 @@
 // HeartButton.jsx
 //import './HeartButton.css'; // optional: external CSS if required
 
-export default function HeartButton() {
+export default function HeartButton(props) {
+    const {isLiked} = props;
+
   return (
     <div className="heart-container size-5 lg:size-7" title="Like">
-      <input type="checkbox" className="checkbox" id="Give-It-An-Id" />
+      <input type="checkbox" checked={isLiked} className="checkbox" id="Give-It-An-Id" />
       <div className="svg-container">
         <svg viewBox="0 0 24 24" className="svg-outline" xmlns="http://www.w3.org/2000/svg">
           <path

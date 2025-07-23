@@ -4,25 +4,15 @@ import PostComment from "./PostComment";
 import usePostComment from "../../../../Hooks/usePostComment";
 import MinimalLoader from "../../../misc/MinimalLoader";
 import NoComments from "./NoComments";
+import useLikePost from "../../../../Hooks/useLikePost";
 
 function PostFooter(props) {
     const { post } = props;
 
-    const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(1000);
+    const {isLiked, handleLike, isLoading, ErrorPopup: LikeError} = useLikePost(post);
     const [comments, setComments] = useState(500);
     const [newComment, setNewComment] = useState('')
     const { isCommenting, handleComment,showErrorPopup, ErrorPopup: CommentError } = usePostComment();
-
-    function handleLike() {
-        if (liked) {
-            setLiked(false);
-            setLikes(likes - 1);
-        } else {
-            setLiked(true);
-            setLikes(likes + 1);
-        }
-    }
 
     async function handlePostComment() {
         if (newComment) {
@@ -36,6 +26,7 @@ function PostFooter(props) {
     return (
         <div className="flex flex-col items-start justify-start gap-4 pb-3 flex-1 h-full">
             <CommentError />
+            <LikeError />
             <div className="flex flex-col h-full gap-2  max-h-[85%] w-full">
                 <p className="font-semibold text-xl">Comments</p>
 
@@ -51,7 +42,7 @@ function PostFooter(props) {
             <div className="flex justify-center items-center gap-5 lg:gap-7">
                 <div className="flex gap-2 justify-start items-center">
                     <button onClick={handleLike}>
-                        <HeartButton />
+                        <HeartButton isLiked={isLiked}/>
                     </button>
                     <p className="text-[12px] lg:text[16px]">{post?.likes?.length || 0} Likes</p>
                 </div>

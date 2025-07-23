@@ -14,17 +14,17 @@ function ProfilePosts(props) {
     if (!isLoading) return (
         <div className="w-full flex-1 flex flex-wrap mt-3 gap-y-3 overflow-y-auto mb-5 sleek-scrollbar">
             <ErrorPopup />
-            {isLoading && (
+            {isLoading ? (
                 <>
                     <PostLoader />
                     <PostLoader />
                     <PostLoader />
                     <PostLoader />
-                </>  
-            )}
-            {!isLoading && (posts.length > 0? posts.map((post) => {
+                </>
+            ) : (posts.length > 0 ? posts.map((post) => {
                 return <ProfilePost key={post.id} post={post} handleOpenModal={handleOpenModal} />
             }) : <NoPosts />)}
+
         </div>
     )
 }

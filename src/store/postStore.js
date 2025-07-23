@@ -22,6 +22,14 @@ const usePostStore = create((set) => ({
             }
             return post
         })
+    })),
+    toggleLike:(id, authUser) => set(state => ({
+        posts: state.posts.map(post => {
+            if(post.id === id){
+                return{...post, likes: post.likes.includes(authUser.uid)? post.likes.filter(like => {return(like != authUser.uid)}) : [authUser.uid, ...post.likes]}
+            }
+            return post;
+        })
     }))
 }))
 
