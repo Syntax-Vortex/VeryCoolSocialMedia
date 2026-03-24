@@ -2,10 +2,10 @@ import { useState } from "react";
 import useAuthStore from "../store/authStore";
 import useErrorPopup from "./useErrorPopup";
 import useSuccessPopup from "./useSuccessPopup";
-import { supabase } from "../../supabaseClient";
-import { firestore } from "../firebase/firebase";
+import { firestore, storage } from "../firebase/firebase";
 import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import useUserProfileStore from "../store/userProfileStore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function useEditProfile() {
     const [isUpdating, setIsUpdating] = useState(false);
@@ -26,12 +26,10 @@ export default function useEditProfile() {
 
         try {
             setUpdatedSuccessfully(false);
-            if (selectedFile) {
-                const filePath = `profilePics/${authUser.uid}`;
-                await supabase.storage.from('images').upload(filePath, selectedFile, {
-                    upsert: true
-                });
-                pfpUrl = supabase.storage.from('images').getPublicUrl(filePath).data.publicUrl;
+            if (selectedFileString) {
+                const storageRef = ref(storage, `profilePics/${authUser.uid}`);
+                await uploadString(storageRef, selectedFileString, "data_url");
+                pfpUrl = await getDownloadURL(storageRef);
             }else if(selectedFileString === 'removed'){
                 pfpUrl = '';
             }

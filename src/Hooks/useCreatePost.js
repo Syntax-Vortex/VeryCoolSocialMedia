@@ -2,11 +2,11 @@ import { useState } from "react";
 import useErrorPopup from "./useErrorPopup";
 import useAuthStore from '../store/authStore'
 import { doc, addDoc, getDoc, collection, updateDoc } from "firebase/firestore";
-import { firestore } from "../firebase/firebase";
+import { firestore, storage } from "../firebase/firebase";
 import useUserProfileStore from "../store/userProfileStore";
 import usePostStore from "../store/postStore";
-import { supabase } from "../../supabaseClient";
 import { useLocation } from "react-router-dom";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function useCreatePost() {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,8 +17,8 @@ export default function useCreatePost() {
     const location = useLocation();
     const pathname = location.pathname;
 
-    const uploadPost = async (caption, selectedFiles, theme) => {
-        if (!caption && !selectedFiles) {
+    const uploadPost = async (caption, selectedFileStrings, theme) => {
+        if (!caption && !selectedFileStrings?.length > 0) {
             showErrorPopup('Please enter a caption or select images');
             return;
         }
@@ -37,16 +37,16 @@ export default function useCreatePost() {
 
         try {
             const postDocRef = await addDoc(collection(firestore, 'posts'), newPostDoc);
-            let picUrls =[];
-            if (selectedFiles) {
-                const filePath = `postPics/${postDocRef.id}`;
+            let picUrls = [];
+            if (selectedFileStrings?.length > 0) {
                 picUrls = await Promise.all(
-                    selectedFiles.map((file, index) =>
-                        supabase.storage.from('images').upload(`${filePath}/${index}`, file)
-                            .then(() => {
-                                const url = (supabase.storage.from('images').getPublicUrl(`${filePath}/${index}`).data.publicUrl);
-                                return url;
-                            })
+                    selectedFileStrings.map(async (fileString, index) => {
+                        const storageRef = ref(storage, `postPics/${postDocRef.id}/${index}`);
+                        await uploadString(storageRef, fileString, "data_url");
+                        const url = await getDownloadURL(storageRef);
+                        return url;
+                    }
+
                     )
                 )
                 await updateDoc(postDocRef, { images: picUrls });
@@ -55,21 +55,21 @@ export default function useCreatePost() {
             const userDocRef = doc(firestore, 'users', authUser.uid);
             const userDocSnap = await getDoc(userDocRef);
             const userDocData = userDocSnap.data()
-            await updateDoc(userDocRef,{posts: [postDocRef.id, ...(userDocData.posts || [])]})
+            await updateDoc(userDocRef, { posts: [postDocRef.id, ...(userDocData.posts || [])] })
 
             newPostDoc.images = picUrls;
-            if(pathname !== '/' && userProfile.uid === authUser.uid) addPost({...newPostDoc, id:postDocRef.id});
-            if(userProfile.uid === authUser.uid) createPost({...newPostDoc, id:postDocRef.id});
-            
+            if (pathname !== '/' && userProfile.uid === authUser.uid) addPost({ ...newPostDoc, id: postDocRef.id });
+            if (userProfile.uid === authUser.uid) createPost({ ...newPostDoc, id: postDocRef.id });
+
             return true;
         } catch (error) {
             showErrorPopup(error.message);
             return false;
-        }finally{
+        } finally {
             setIsLoading(false);
         }
     }
 
-    return {isLoading, uploadPost, ErrorPopup}
+    return { isLoading, uploadPost, ErrorPopup }
 
 }

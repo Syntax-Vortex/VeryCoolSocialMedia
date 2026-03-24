@@ -24,7 +24,7 @@ export default function CreatePostModal(props) {
 
 
     async function handleUploadPost() {
-        const result = await uploadPost(caption, selectedFiles, theme);
+        const result = await uploadPost(caption, selectedFileStrings, theme);
         if (result) {
             closeModal();
         }
