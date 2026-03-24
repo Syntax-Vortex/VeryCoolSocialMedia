@@ -41,7 +41,7 @@ function PostModal(props) {
 
                     <div className='w-full sm:w-[50%] flex flex-col items-start h-full'>
                         <PostHeader username={user?.username} pfp={user?.pfp || '/defpfp.png'} caption={post?.caption}
-                            createdBy={post.createdBy} createdAt={post.createdAt} id={post.id} handleCloseModal={handleCloseModal} />
+                            createdBy={post.createdBy} createdAt={post.createdAt} id={post.id} handleCloseModal={handleCloseModal} images={post.images}/>
 
                         <div className='flex flex-col gap-3 overflow-y-auto max-h-[70vh] w-full gradient-scrollbar'>
                             <div className="w-full flex items-center justify-start my-1.5 gap-5 flex-wrap">
